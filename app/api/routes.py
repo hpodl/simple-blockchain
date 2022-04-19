@@ -1,13 +1,12 @@
 import flask
-
 from . import api
-from start import blockchain, node_id
-
+from app.blockchain import blockchain, node_id
 
 @api.route('/chain', methods=['GET'])
 def get_chain():
     response = {
         'chain' : blockchain.chain,
+        'length' : blockchain.latest_block['index']
     }
 
     return flask.jsonify(response), 200
@@ -16,7 +15,7 @@ def get_chain():
 @api.route('/mine', methods=['GET'])
 def mine():
     proof = blockchain.proof_of_work()
-    if blockchain.proof_is_valid(proof):
+    if blockchain.proof_is_valid(proof, blockchain.latest_block['proof']):
         #reward the miner for mining a new block
         blockchain.add_transaction(
             sender = "0",
@@ -35,5 +34,3 @@ def mine():
         }
 
     return flask.jsonify(response), 200
-
-    

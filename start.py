@@ -1,11 +1,12 @@
+from platform import node
+from numpy import block
 from app import create_app
 from uuid import uuid4
 
 from app.blockchain.blockchain import Blockchain
 
+
 app = create_app()
-blockchain = Blockchain()
-node_id = str(uuid4).replace('-', '')
 
 with open("key.txt", "w+") as fh:
     app.secret_key = fh.readline()
