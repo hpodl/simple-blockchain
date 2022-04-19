@@ -1,5 +1,3 @@
-from platform import node
-from numpy import block
 from app import create_app
 from uuid import uuid4
 
