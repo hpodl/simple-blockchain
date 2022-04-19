@@ -8,13 +8,13 @@ class Blockchain:
 
         self.leading_zeroes = 5
 
-    def add_block(self, proof):
+    def add_block(self, proof, last_hash):
         if self.proof_is_valid(proof, self.latest_block['proof']):
             new_block = {
                 'last_index'    :   self.latest_block['index'] + 1,
                 'transactions'  :   self.current_block_transactions,
                 'proof'         :   proof,
-                'previous_hash':   self.latest_block['proof'],
+                'previous_hash':   self.hash_block(self.latest_block),
             }
 
             self.current_block_transactions = []
