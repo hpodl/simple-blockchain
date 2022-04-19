@@ -1,7 +1,7 @@
 import flask
 
 from . import api
-from start import blockchain
+from start import blockchain, node_id
 
 
 @api.route('/chain', methods=['GET'])
@@ -20,7 +20,7 @@ def mine():
         #reward the miner for mining a new block
         blockchain.add_transaction(
             sender = "0",
-            recipient = 123, #node_id,
+            recipient = node_id,
             amount = 1
         )
 
