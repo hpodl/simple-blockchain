@@ -8,7 +8,7 @@ class Blockchain:
 
         self.leading_zeroes = 5
 
-    def add_block(self, proof, last_hash):
+    def add_block(self, proof):
         if self.proof_is_valid(proof, self.latest_block['proof']):
             new_block = {
                 'last_index'    :   self.latest_block['index'] + 1,
@@ -18,6 +18,8 @@ class Blockchain:
             }
 
             self.current_block_transactions = []
+            return new_block
+        return None
 
     def add_transaction(self, sender, recipient, amount):
         self.current_block_transactions.append(

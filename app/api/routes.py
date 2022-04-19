@@ -1,28 +1,39 @@
 import flask
-from numpy import block
+
 from . import api
 from start import blockchain
 
 
-@api.route('/chain', methods=['GET', 'POST'])
+@api.route('/chain', methods=['GET'])
 def get_chain():
-    return "Chain"
+    response = {
+        'chain' : blockchain.chain,
+    }
+
+    return flask.jsonify(response), 200
 
 
 @api.route('/mine', methods=['GET'])
 def mine():
     proof = blockchain.proof_of_work()
     if blockchain.proof_is_valid(proof):
-        reward_transaction = blockchain.add_transaction(
+        #reward the miner for mining a new block
+        blockchain.add_transaction(
             sender = "0",
             recipient = 123, #node_id,
             amount = 1
         )
-        
+
+        new_block = blockchain.add_block(proof)
         
         response = {
-            'message'   :   "Mined a new block.",
-            'id'        :   blockchain.latest_block['index'] + 1,
-
+            'message'       :   "Mined a new block.",
+            'id'            :   new_block['index'],
+            'transactions'  :   new_block['transactions'],
+            'previous_hash' :   new_block['previous_hash'],
+            'proof'         :   new_block['proof'],
         }
+
+    return flask.jsonify(response), 200
+
     

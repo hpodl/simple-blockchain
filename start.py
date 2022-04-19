@@ -1,7 +1,7 @@
 from app import create_app
 from uuid import uuid4
 
-from blockchain.blockchain import Blockchain
+from app.blockchain.blockchain import Blockchain
 
 app = create_app()
 blockchain = Blockchain()
