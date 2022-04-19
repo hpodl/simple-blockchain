@@ -1,7 +1,11 @@
 from app import create_app
 from uuid import uuid4
 
+from blockchain.blockchain import Blockchain
+
 app = create_app()
+blockchain = Blockchain()
+
 with open("key.txt", "w+") as fh:
     app.secret_key = fh.readline()
     if not app.secret_key:
