@@ -61,9 +61,6 @@ class Blockchain:
         
         return False
 
-    def hash_block(self, block = latest_block):
-        pass
-
     def proof_of_work(self):
         proof = 0
         prev_proof = self.latest_block['proof']
