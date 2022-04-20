@@ -9,11 +9,15 @@ class Blockchain:
         self.current_block_transactions = []
         self.nodes = set()
 
+        # origin block
         self.add_block(proof=1203, previous_hash="1")
 
         self.leading_zeroes = 4
 
     def add_block(self, proof, previous_hash=None):
+        """
+        Creates a block with the given proof and appends it to the chain.
+        """
         new_block = {
             'index'         :   len(self.chain),
             'timestamp'     :   time(),
@@ -27,6 +31,9 @@ class Blockchain:
         return new_block
 
     def hash(self, block):
+        """
+        Takes a block as an argument and returns a string containing its sha256 hash 
+        """
         block_to_str = dumps(block, sort_keys=True).encode()
         return sha256(block_to_str).hexdigest()
 
@@ -40,6 +47,9 @@ class Blockchain:
         )
 
     def add_node(self, address):
+        """
+        Registers an adress of a remote node hosting this chain
+        """
         url = urlparse(address)
 
         # adds the node if not present already
@@ -51,7 +61,7 @@ class Blockchain:
     
     def proof_is_valid(self, proof, prev_proof):
         """
-        Validates proof when appended to prev_proof.
+        Validates proof of the current block in relation to the previous one.
         """
         byte_repr = f"{prev_proof}{proof}".encode()
         hashed = sha256(byte_repr).hexdigest()
@@ -62,6 +72,9 @@ class Blockchain:
         return False
 
     def proof_of_work(self):
+        """
+        Mining algorithm, returns proof fitting the criteria
+        """
         proof = 0
         prev_proof = self.latest_block['proof']
         while not self.proof_is_valid(proof, prev_proof):
@@ -71,6 +84,12 @@ class Blockchain:
 
 
     def verify_chain(self, start_index=0):
+        """
+        Verifies whether the chain is unmodified.
+
+        Keyword arguments:
+        start_index -- starts verification from a block with a given index in the chain
+        """
         for block in self.chain[max(1, start_index):]:
             prev_block = self.chain[block['index'] - 1]
             if not self.proof_is_valid(block['proof'], prev_block['proof']):

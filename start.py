@@ -1,9 +1,6 @@
 from app import create_app
 from uuid import uuid4
 
-from app.blockchain.blockchain import Blockchain
-
-
 app = create_app()
 
 with open("key.txt", "w+") as fh:
