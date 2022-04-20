@@ -9,13 +9,13 @@ class Blockchain:
         self.current_block_transactions = []
         self.nodes = set()
 
-        self.add_block(proof=1203, previous_hash=1)
+        self.add_block(proof=1203, previous_hash="1")
 
         self.leading_zeroes = 4
 
     def add_block(self, proof, previous_hash=None):
         new_block = {
-            'index'         :   len(self.chain) + 1,
+            'index'         :   len(self.chain),
             'timestamp'     :   time(),
             'transactions'  :   self.current_block_transactions,
             'proof'         :   proof,
@@ -71,4 +71,11 @@ class Blockchain:
 
 
     def verify_chain(self, start_index=0):
-        pass
+        for block in self.chain[max(1, start_index):]:
+            prev_block = self.chain[block['index'] - 1]
+            if not self.proof_is_valid(block['proof'], prev_block['proof']):
+                return False
+            if self.hash(prev_block) != block['previous_hash']:
+                return False
+
+            return True

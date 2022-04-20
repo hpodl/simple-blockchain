@@ -34,3 +34,7 @@ def mine():
         }
 
     return flask.jsonify(response), 200
+
+@api.route('/verify', methods=['GET'])
+def verify():
+    return "Valid chain" if blockchain.verify_chain() else "Invalid chain"
