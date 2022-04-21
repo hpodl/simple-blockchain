@@ -6,7 +6,7 @@ from app.blockchain import blockchain, node_id
 def get_chain():
     response = {
         'chain' : blockchain.chain,
-        'length' : blockchain.latest_block['index']
+        'length' : blockchain.latest_block['index'] + 1
     }
 
     return flask.jsonify(response), 200
