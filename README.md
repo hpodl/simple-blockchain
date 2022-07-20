@@ -1,6 +1,5 @@
-# SIMPLE_BLOCKCHAIN
+## simple-blockchain
 
-Really basic and not well thought-out blockchain project I'm working on to understand how this technology works. Doesn't have decentralized connectivity yet. 
+A simple blockchain project with minimalistic web api to demonstrate the basic principles behind this technology.
 
-
-Made after reading and consulting [this guide.](https://hackernoon.com/learn-blockchains-by-building-one-117428612f46)
+Made with help of [this guide.](https://hackernoon.com/learn-blockchains-by-building-one-117428612f46)
